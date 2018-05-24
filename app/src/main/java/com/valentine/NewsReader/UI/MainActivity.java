@@ -1,10 +1,13 @@
 package com.valentine.NewsReader.UI;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.valentine.NewsReader.Model.Article;
 import com.valentine.NewsReader.Model.ArticleResponse;
@@ -22,15 +25,24 @@ import retrofit2.Response;
  * Created by valentine on 19-05-2018.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends NewsActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Article> list=new ArrayList<>();
-
+    RelativeLayout newscontainer;
+    BottomNavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //dynamically include the  current activity      layout into  baseActivity layout.now all the view of baseactivity is   accessible in current activity.
+        newscontainer = (RelativeLayout)  findViewById(R.id.newscontainer);
+        navigation= (BottomNavigationView) findViewById(R.id.navigation);
+        View wizard = getLayoutInflater().inflate(R.layout.activity_main, null);
+        newscontainer.addView(wizard);
+
+
+//        setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
