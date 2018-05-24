@@ -1,4 +1,4 @@
-package com.valentinerutto.newsreader;
+package com.valentine.NewsReader;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.valentinerutto.newsreader", appContext.getPackageName());
+        assertEquals("com.beginner.news", appContext.getPackageName());
     }
 }

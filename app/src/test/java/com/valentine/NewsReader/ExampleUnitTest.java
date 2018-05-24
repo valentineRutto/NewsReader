@@ -1,4 +1,4 @@
-package com.valentinerutto.newsreader;
+package com.valentine.NewsReader;
 
 import org.junit.Test;
 
