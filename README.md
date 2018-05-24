@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # JSONRetroNews
 
 
@@ -19,3 +20,11 @@ Currently This Version includes:
 - Logging-interceptor
 - Onclick item loads URL in a dialog WebView
 
+=======
+# NewsReader
+Get your favorite news from hacker news.
+Implementing:
+ -Hackernews api
+  -firebase
+  -material design
+>>>>>>> 3d3e372ceeb70f8a68639796678a3e47bac7fa39
