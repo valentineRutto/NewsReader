@@ -1,56 +1,64 @@
 package com.valentine.NewsReader.UI;
 
-import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 
+import com.valentine.NewsReader.Adapter.NewsAdapter;
 import com.valentine.NewsReader.Model.Article;
 import com.valentine.NewsReader.Model.ArticleResponse;
-import com.valentine.NewsReader.Adapter.NewsAdapter;
 import com.valentine.NewsReader.R;
 import com.valentine.NewsReader.REST.ApiClient;
 import com.valentine.NewsReader.REST.ApiInterface;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by valentine on 19-05-2018.
- */
-
-public class MainActivity extends NewsActivity {
+public class storyFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Article> list=new ArrayList<>();
-    RelativeLayout newscontainer;
-    BottomNavigationView navigation;
+    View rootview;
+    public storyFragment() {}
+
+    public static storyFragment newInstance() {
+        storyFragment fragment = new storyFragment();
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        newscontainer = (RelativeLayout)  findViewById(R.id.newscontainer);
-        navigation= (BottomNavigationView) findViewById(R.id.navigation);
-        View wizard = getLayoutInflater().inflate(R.layout.activity_main, null);
-        newscontainer.addView(wizard);
 
+}
 
-//        setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.action_bar_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        layoutManager = new LinearLayoutManager(this);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootview = inflater.inflate(R.layout.activity_story_fragment, container, false);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerviewstory);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        final ApiInterface apiInterface = ApiClient.getClient(this).create(ApiInterface.class);
 
-          apiInterface.getJobStories().enqueue(new Callback<List<Integer>>() {
+        final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
+
+        apiInterface.getShowStories().enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 List<Integer> topStories = response.body();
@@ -58,10 +66,10 @@ public class MainActivity extends NewsActivity {
                     apiInterface.getArticle(topStories.get(i)).enqueue(new Callback<ArticleResponse>() {
                         @Override
                         public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
-                            String title= response.body().getTitle().toString();
-                            String url = response.body().getUrl().toString();
-                            list.add(new Article(title,url));
-                            NewsAdapter adapter=new NewsAdapter(list);
+                            String title = response.body().getTitle().toString();
+                            String url = response.body().getUrl();
+                            list.add(new Article(title, url));
+                            NewsAdapter adapter = new NewsAdapter(list);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
@@ -79,6 +87,8 @@ public class MainActivity extends NewsActivity {
 
             }
         });
+
+        return rootview;
     }
-}
+    }
 

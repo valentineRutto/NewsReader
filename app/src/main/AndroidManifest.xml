@@ -24,7 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Showstories"></activity>
+        <activity android:name=".UI.Showstories" />
+        <activity android:name=".UI.TopStories" />
+        <activity android:name=".UI.storyFragment"></activity>
     </application>
 
 </manifest>
