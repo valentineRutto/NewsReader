@@ -32,11 +32,11 @@ public class NewsActivity extends AppCompatActivity {
             android.support.v4.app.Fragment selectedFragment =null;
             switch (item.getItemId()) {
                 case R.id.navigation_Top:
-                    Intent in =new Intent(getBaseContext(),TopStories.class);
-                    startActivity(in);
+                    selectedFragment = TopStoriesFragment.newInstance();
+
                     break;
                 case R.id.navigation_Job:
-                     in =new Intent(getBaseContext(),MainActivity.class);
+                    Intent in =new Intent(getBaseContext(),MainActivity.class);
                     startActivity(in);
                      break;
                 case R.id.navigation_Show:
