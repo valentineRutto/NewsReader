@@ -1,14 +1,19 @@
 package com.valentine.NewsReader.UI;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.valentine.NewsReader.Adapter.NewsAdapter;
 import com.valentine.NewsReader.Model.Article;
@@ -24,15 +29,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class storyFragment extends Fragment {
+public class ASkFragment extends Fragment {
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Article> list=new ArrayList<>();
     View rootview;
-    public storyFragment() {}
+    public ASkFragment() {}
 
-    public static storyFragment newInstance() {
-        storyFragment fragment = new storyFragment();
+    public static ASkFragment newInstance() {
+        ASkFragment fragment = new ASkFragment();
         return fragment;
     }
 
@@ -41,13 +47,13 @@ public class storyFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-}
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.activity_story_fragment, container, false);
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerviewstory);
+        rootview = inflater.inflate(R.layout.ask_fragment, container, false);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerviewask);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -58,7 +64,7 @@ public class storyFragment extends Fragment {
 
         final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
 
-        apiInterface.getShowStories().enqueue(new Callback<List<Integer>>() {
+        apiInterface.getAskStories().enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 List<Integer> topStories = response.body();
@@ -90,5 +96,4 @@ public class storyFragment extends Fragment {
 
         return rootview;
     }
-    }
-
+}

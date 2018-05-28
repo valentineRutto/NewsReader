@@ -22,6 +22,9 @@ public interface ApiInterface {
     @GET("/v0/jobstories.json?print=pretty")
     Call<List<Integer>> getJobStories();
 
+    @GET("/v0/askstories.json?print=pretty")
+    Call<List<Integer>> getAskStories();
+
     @GET("v0/item/{articleid}.json?print=pretty")
     Call<ArticleResponse> getArticle(@Path("articleid") int id);
 }

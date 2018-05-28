@@ -30,8 +30,8 @@ public class TopStoriesFragment  extends Fragment {
     View rootview;
     public TopStoriesFragment() {}
 
-    public static storyFragment newInstance() {
-        storyFragment fragment = new storyFragment();
+    public static TopStoriesFragment newInstance() {
+        TopStoriesFragment fragment = new TopStoriesFragment();
         return fragment;
     }
 

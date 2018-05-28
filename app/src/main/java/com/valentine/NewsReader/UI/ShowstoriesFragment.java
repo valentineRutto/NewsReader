@@ -1,12 +1,12 @@
 package com.valentine.NewsReader.UI;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 
 import com.valentine.NewsReader.Adapter.NewsAdapter;
 import com.valentine.NewsReader.Model.Article;
@@ -22,33 +22,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Showstories extends NewsActivity {
-    RelativeLayout newscontainer;
-    BottomNavigationView navigation;
+public class ShowstoriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList<Article> list = new ArrayList<>();
+    ArrayList<Article> list=new ArrayList<>();
+    View rootview;
+    public ShowstoriesFragment() {}
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public static ShowstoriesFragment newInstance() {
+        ShowstoriesFragment fragment = new ShowstoriesFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_showstories);
 
 
-        //dynamically include the  current activity      layout into  baseActivity layout.now all the view of baseactivity is   accessible in current activity.
-        newscontainer = (RelativeLayout) findViewById(R.id.newscontainer);
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        View wizard = getLayoutInflater().inflate(R.layout.activity_showstories, null);
-        newscontainer.addView(wizard);
+    }
 
-//        setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.action_bar_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclershow);
-        layoutManager = new LinearLayoutManager(this);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootview = inflater.inflate(R.layout.activity_showstories, container, false);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclershow);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        final ApiInterface apiInterface = ApiClient.getClient(this).create(ApiInterface.class);
+
+        final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
 
         apiInterface.getShowStories().enqueue(new Callback<List<Integer>>() {
             @Override
@@ -59,7 +65,7 @@ public class Showstories extends NewsActivity {
                         @Override
                         public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                             String title = response.body().getTitle().toString();
-                            String url = response.body().getUrl().toString();
+                            String url = response.body().getUrl();
                             list.add(new Article(title, url));
                             NewsAdapter adapter = new NewsAdapter(list);
                             recyclerView.setAdapter(adapter);
@@ -80,6 +86,6 @@ public class Showstories extends NewsActivity {
             }
         });
 
-
+        return rootview;
     }
 }

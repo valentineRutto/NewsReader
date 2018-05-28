@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.valentine.NewsReader.MainActivity;
 import com.valentine.NewsReader.R;
 
 /**

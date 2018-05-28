@@ -11,22 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.MainActivity" />
         <activity
             android:name=".UI.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".UI.NewsActivity"
-            android:label="@string/title_activity_news">
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.Showstories" />
-        <activity android:name=".UI.storyFragment" />
-        <activity android:name=".UI.TopStoriesFragment"></activity>
     </application>
 
 </manifest>
