@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/newscontainer"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.valentine.NewsReader.Fragments.ASkFragment">
@@ -16,4 +15,4 @@
     </android.support.v7.widget.RecyclerView>
 
 
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -2,6 +2,7 @@ package com.valentine.NewsReader.Fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,11 +23,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TopStoriesFragment  extends Fragment {
+public class TopStoriesFragment  extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Article> list=new ArrayList<>();
     View rootview;
+    public SwipeRefreshLayout swipeLayout;
+    NewsAdapter adapter = new NewsAdapter(list);
+
+
     public TopStoriesFragment() {}
 
     public static TopStoriesFragment newInstance() {
@@ -46,12 +51,26 @@ public class TopStoriesFragment  extends Fragment {
                              Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.activity_top_stories_fragment, container, false);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerviewtopstory);
+        swipeLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipe_refreshtop);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        Asking();
+        onRefresh();
+
+        // Configure the refreshing colors
+        swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        return rootview;
+    }
+    private void Asking() {
 
 
         final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
@@ -68,7 +87,6 @@ public class TopStoriesFragment  extends Fragment {
                             String url = response.body().getUrl();
                             String type = response.body().getType();
                             list.add(new Article(title, url,type));
-                            NewsAdapter adapter = new NewsAdapter(list);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
@@ -87,6 +105,14 @@ public class TopStoriesFragment  extends Fragment {
             }
         });
 
-        return rootview;
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeLayout.setOnRefreshListener(this);
+        list.clear();
+        swipeLayout.setRefreshing(false);
+        adapter.notifyDataSetChanged();
+        Asking();
     }
 }

@@ -2,6 +2,7 @@ package com.valentine.NewsReader.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,12 +23,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowstoriesFragment extends Fragment {
+public class ShowstoriesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    ArrayList<Article> list=new ArrayList<>();
+    ArrayList<Article> list = new ArrayList<>();
     View rootview;
-    public ShowstoriesFragment() {}
+    NewsAdapter adapter = new NewsAdapter(list);
+    SwipeRefreshLayout swipeLayout;
+
+    public ShowstoriesFragment() {
+    }
 
     public static ShowstoriesFragment newInstance() {
         ShowstoriesFragment fragment = new ShowstoriesFragment();
@@ -46,7 +51,7 @@ public class ShowstoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.activity_showstories, container, false);
         recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclershow);
-
+        swipeLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipe_refreshshow);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -54,6 +59,19 @@ public class ShowstoriesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
 
+        Asking();
+        onRefresh();
+
+        // Configure the refreshing colors
+        swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        return rootview;
+
+    }
+
+    public void Asking() {
         final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
 
         apiInterface.getShowStories().enqueue(new Callback<List<Integer>>() {
@@ -67,8 +85,7 @@ public class ShowstoriesFragment extends Fragment {
                             String title = response.body().getTitle().toString();
                             String url = response.body().getUrl();
                             String type = response.body().getType();
-                            list.add(new Article(title, url,type));
-                            NewsAdapter adapter = new NewsAdapter(list);
+                            list.add(new Article(title, url, type));
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
@@ -87,6 +104,14 @@ public class ShowstoriesFragment extends Fragment {
             }
         });
 
-        return rootview;
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeLayout.setOnRefreshListener(this);
+        list.clear();
+        swipeLayout.setRefreshing(false);
+        adapter.notifyDataSetChanged();
+        Asking();
     }
 }
