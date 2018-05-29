@@ -16,6 +16,8 @@ public interface ApiInterface {
     @GET("/v0/topstories.json?print=pretty")
     Call<List<Integer>> getTopStories();
 
+
+
     @GET("v0/showstories.json?print=pretty")
     Call<List<Integer>> getShowStories();
 

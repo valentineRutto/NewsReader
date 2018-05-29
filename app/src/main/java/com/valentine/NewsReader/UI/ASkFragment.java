@@ -74,8 +74,8 @@ public class ASkFragment extends Fragment {
                         public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                             String title = response.body().getTitle().toString();
                             String url = response.body().getUrl();
-                            list.add(new Article(title, url));
-                            NewsAdapter adapter = new NewsAdapter(list);
+                            String type = response.body().getType();
+                            list.add(new Article(title, url,type));                            NewsAdapter adapter = new NewsAdapter(list);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
