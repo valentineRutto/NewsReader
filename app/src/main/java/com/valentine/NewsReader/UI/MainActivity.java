@@ -21,7 +21,6 @@ import com.valentine.NewsReader.Fragments.ShowstoriesFragment;
 import com.valentine.NewsReader.Fragments.TopStoriesFragment;
 
 public class MainActivity extends AppCompatActivity {
-ASkFragment ask;
     private TextView mTextMessage;
 SwipeRefreshLayout swipeLayout;
 
@@ -30,8 +29,6 @@ SwipeRefreshLayout swipeLayout;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
         mTextMessage = (TextView) findViewById(R.id.message);
