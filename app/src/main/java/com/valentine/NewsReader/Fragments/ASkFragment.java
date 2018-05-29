@@ -1,4 +1,4 @@
-package com.valentine.NewsReader.UI;
+package com.valentine.NewsReader.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,15 +22,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowstoriesFragment extends Fragment {
+public class ASkFragment extends Fragment {
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     ArrayList<Article> list=new ArrayList<>();
     View rootview;
-    public ShowstoriesFragment() {}
+    public ASkFragment() {}
 
-    public static ShowstoriesFragment newInstance() {
-        ShowstoriesFragment fragment = new ShowstoriesFragment();
+    public static ASkFragment newInstance() {
+        ASkFragment fragment = new ASkFragment();
         return fragment;
     }
 
@@ -44,8 +45,8 @@ public class ShowstoriesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.activity_showstories, container, false);
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclershow);
+        rootview = inflater.inflate(R.layout.ask_fragment, container, false);
+        recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerviewask);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -56,7 +57,7 @@ public class ShowstoriesFragment extends Fragment {
 
         final ApiInterface apiInterface = ApiClient.getClient(getActivity()).create(ApiInterface.class);
 
-        apiInterface.getShowStories().enqueue(new Callback<List<Integer>>() {
+        apiInterface.getAskStories().enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 List<Integer> topStories = response.body();
@@ -67,8 +68,7 @@ public class ShowstoriesFragment extends Fragment {
                             String title = response.body().getTitle().toString();
                             String url = response.body().getUrl();
                             String type = response.body().getType();
-                            list.add(new Article(title, url,type));
-                            NewsAdapter adapter = new NewsAdapter(list);
+                            list.add(new Article(title, url,type));                            NewsAdapter adapter = new NewsAdapter(list);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }

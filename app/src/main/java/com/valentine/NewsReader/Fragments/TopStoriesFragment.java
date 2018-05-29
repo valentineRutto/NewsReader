@@ -1,7 +1,6 @@
-package com.valentine.NewsReader.UI;
+package com.valentine.NewsReader.Fragments;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

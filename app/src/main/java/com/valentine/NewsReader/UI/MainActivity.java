@@ -1,7 +1,6 @@
 package com.valentine.NewsReader.UI;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,10 +11,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.valentine.NewsReader.R;
-import com.valentine.NewsReader.UI.ASkFragment;
-import com.valentine.NewsReader.UI.JobFragment;
-import com.valentine.NewsReader.UI.ShowstoriesFragment;
-import com.valentine.NewsReader.UI.TopStoriesFragment;
+import com.valentine.NewsReader.Fragments.ASkFragment;
+import com.valentine.NewsReader.Fragments.JobFragment;
+import com.valentine.NewsReader.Fragments.ShowstoriesFragment;
+import com.valentine.NewsReader.Fragments.TopStoriesFragment;
 
 public class MainActivity extends AppCompatActivity {
 

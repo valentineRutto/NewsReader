@@ -3,6 +3,7 @@ package com.valentine.NewsReader.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -85,9 +87,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyviewHolder> 
     }
     public class MyviewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        ImageButton comment;
         public MyviewHolder(View itemView) {
             super(itemView);
             title=(TextView)itemView.findViewById(R.id.textview);
+            comment=(AppCompatImageButton)itemView.findViewById(R.id.comment);
+
         }
     }
 }
